@@ -1,5 +1,5 @@
 import unittest
-from game.game import Board, Game
+from game.game import Board
 from unittest.mock import MagicMock
 
 
@@ -77,17 +77,15 @@ class TestBoard(unittest.TestCase):
 
     def test_winner(self):
         board = Board()
-        patched_available_positions = MagicMock(return_value=[])
-        board.available_positions = patched_available_positions
         self.assertIsNone(board.winner)
 
         board = Board()
-        patched_available_positions = MagicMock(return_value=[1, 2])
-        board.available_positions = patched_available_positions
         board.state = ['x'] * 9
         self.assertEqual(board.winner, 'x')
-        self.assertTrue(patched_available_positions.called)
 
-        board.state = ['x'] * 3 + ['o'] * 3
-        self.assertEqual(board.winner, 'o')
+    def test_next_sign(self):
+        board = Board()
+        self.assertEqual(board.next_sign(), 'x')
 
+        board.state[4] = 'x'
+        self.assertEqual(board.next_sign(), 'o')

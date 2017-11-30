@@ -14,6 +14,13 @@ class Board(object):
             " {} | {} | {}   "
         ).format(*[i if not isinstance(i, int) else ' ' for i in self.state])
 
+    def copy(self):
+        """
+        :return: copy of the current board but with the new state list
+        attached to it
+        """
+        return Board(state=self.state[:])
+
     def is_over(self):
         """
         :return: Boolean that shows whether or not game is over
@@ -37,20 +44,36 @@ class Board(object):
         """
         return [x for x in self.state if isinstance(x, int)]
 
+    def next_sign(self):
+        """
+        :return: sign of the next player
+        """
+        if self.state.count('o') == self.state.count('x'):
+            return 'x'
+        return 'o'
+
     @property
     def winner(self):
         """
         :return: 'x', 'o' or None, depending on who won the game, None is for
         draw
         """
-        if not self.available_positions():
-            return None
-        x_count = self.state.count('x')
-        o_count = self.state.count('o')
-        if x_count > o_count:
-            return 'x'
-        elif x_count == o_count:
-            return 'o'
+        winning_positions = (
+            (0, 3, 6),
+            (1, 4, 7),
+            (2, 5, 8),
+            (0, 1, 2),
+            (3, 4, 5),
+            (6, 7, 8),
+            (0, 4, 8),
+            (2, 4, 6),
+        )
+        for wp in winning_positions:
+            characters = {
+                self.state[wp[0]], self.state[wp[1]], self.state[wp[2]]
+            }
+            if len(characters) == 1:
+                return characters.pop()
 
 
 class Game(object):
