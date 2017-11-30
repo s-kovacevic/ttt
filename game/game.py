@@ -1,7 +1,7 @@
 class Board(object):
     def __init__(self, state=None):
         if not state:
-            self.state = [i for i in range(1, 10)]
+            self.state = [i for i in range(9)]
         else:
             self.state = state
 

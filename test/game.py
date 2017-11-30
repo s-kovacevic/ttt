@@ -7,7 +7,7 @@ class TestBoard(unittest.TestCase):
 
     def test_init(self):
         board = Board()
-        self.assertEqual(board.state, [i for i in range(1, 10)])
+        self.assertEqual(board.state, [i for i in range(9)])
 
         custom_state = ['', 1, 2, 4, 6, 8, 11, 'b']
         board = Board(state=custom_state)
@@ -21,7 +21,7 @@ class TestBoard(unittest.TestCase):
 
         self.assertFalse(board.is_over())
 
-        init_state = [i for i in range(1, 10)]
+        init_state = [i for i in range(9)]
 
         state = ['x', 'x', 'x'] + [''] * 6
         board.state = state
@@ -66,7 +66,7 @@ class TestBoard(unittest.TestCase):
         self.assertTrue(board.is_over())
 
     def test_available_positions(self):
-        initial_state = [i for i in range(1, 10)]
+        initial_state = [i for i in range(9)]
         board = Board()
         self.assertEqual(board.available_positions(), initial_state)
 
