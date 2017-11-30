@@ -60,3 +60,69 @@ class StupidBot(Player):
     def play(self, board):
         position = random.choice(board.available_positions())
         board.state[position] = self.sign
+
+
+class UnbeatableBot(Player):
+
+    def __init__(self, sign):
+        super(UnbeatableBot, self).__init__(sign)
+
+    def minimax(self, sign, board):
+        """
+        Recursive minimax algorithm. Basically, this algorithm will play every
+        possible game till the end and calculate best-worst case scenario while
+        taking in count that players switch turns.
+        :param sign: sign of the next player either x or o
+        :param board:
+        :return: int 0 if this move will eventually lead to a tie in worst case
+        scenario, 10 if this move leads to a victory, -10 if move leads to a
+        loss
+        """
+        # TODO add weighting of returned integers so that shallower
+        # solutions get better scores
+        if board.is_over():
+            if not board.winner:
+                return 0
+            if board.winner == self.sign:
+                return 10
+            if board.winner != self.sign:
+                return -10
+
+        position_values = {}
+
+        # If current board has multiple solutions, recursively solve them and
+        # store every position value
+        for position in board.available_positions():
+            copy_board = board.copy()
+            copy_board.state[position] = sign
+            position_values[position] = self.minimax(
+                copy_board.next_sign(), copy_board
+            )
+
+        # Depending on which player is in charge, pick best or worst move
+        # at that point
+        if sign == self.sign:
+            return max(position_values.values())
+        else:
+            return min(position_values.values())
+
+    def play(self, board):
+        position_scores = {}
+        for position in board.available_positions():
+            # Call minimaxing for each available position and pick the one with
+            # the highest score
+            copy_board = board.copy()
+            copy_board.state[position] = self.sign
+            position_scores[position] = self.minimax(
+                copy_board.next_sign(), board=copy_board
+            )
+        best_position = max(
+            position_scores.keys(),
+            key=lambda key: position_scores[key]
+        )
+        board.state[best_position] = self.sign
+
+    def play_cli(self, board):
+        print('Thinking...')
+        self.play(board)
+        print('Unbeatable bot finished his turn...')
