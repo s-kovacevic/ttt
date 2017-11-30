@@ -26,6 +26,9 @@ class Player(object):
 
 
 class HumanPlayer(Player):
+    """
+    Used for human players
+    """
     def __init__(self, sign):
         super(HumanPlayer, self).__init__(sign)
 
@@ -42,6 +45,10 @@ class HumanPlayer(Player):
 
 
 class StupidBot(Player):
+    """
+    Stupid bot that just picks his next move at random from pool of
+    available moves
+    """
     def __init__(self, sign):
         super(StupidBot, self).__init__(sign)
 
