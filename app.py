@@ -1,11 +1,14 @@
 import logging
+from api.api import api
 from flask import Flask, render_template
 from util import setup_logger, get_config
 
 setup_logger()
 logger = logging.getLogger(__name__)
 
+
 app = Flask(__name__)
+app.register_blueprint(api)
 
 
 @app.route('/')
