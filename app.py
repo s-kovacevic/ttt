@@ -1,5 +1,5 @@
 import logging
-from api.api import api
+from api import api
 from flask import Flask, render_template
 from util import setup_logger, get_config
 
