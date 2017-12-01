@@ -107,8 +107,19 @@ class UnbeatableBot(Player):
             return min(position_values.values())
 
     def play(self, board):
+        available_positions = board.available_positions()
+
+        # Optimizing so that if bot goes first it doesn't need to go
+        # through 9 minimaxes to find out the obvious result.
+        # It takes around 6 seconds to recursively solve all possible games on
+        # my machine, and results will be 0 for each field, so lets skip that
+        # and just play a corner
+        if len(available_positions) == 9:
+            board.state[random.choice([0, 2, 6, 8])] = self.sign
+            return
+
         position_scores = {}
-        for position in board.available_positions():
+        for position in available_positions:
             # Call minimaxing for each available position and pick the one with
             # the highest score
             copy_board = board.copy()
