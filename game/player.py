@@ -85,7 +85,7 @@ class UnbeatableBot(Player):
                 return 0
             if board.winner == self.sign:
                 return 10
-            if board.winner != self.sign:
+            else:
                 return -10
 
         position_values = {}
