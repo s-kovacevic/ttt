@@ -1,29 +1,26 @@
 from game.game import Game
-from game.player import HumanPlayer, StupidBot
+from util import limited_input
+from game.player import HumanPlayer, StupidBot, UnbeatableBot
 
 
 if __name__ == '__main__':
-    print('Play versus:')
-    print('1 - friend')
-    print('2 - stupid bot')
+    against = limited_input(
+        prompt='Play versus:\n1 - friend\n2 - stupid bot\n3 - unbeatable bot\n',
+        limit_to=['1', '2', '3'],
+        help_='1, 2 or 3 please.'
+    )
 
-    against = input()
-    while against not in ['1', '2']:
-        print('1 or 2 please.')
-        against = input()
+    sign = limited_input(
+        prompt='Pick your sign (x or o):',
+        limit_to=['x', 'o'],
+        help_='x or o please.'
+    )
 
-    sign = input('Pick your sign (x or o):')
-    while sign not in ['x', 'o']:
-        print('x or o please.')
-        sign = input()
-
+    Bot = StupidBot if against == '2' else UnbeatableBot
     if against == '1':
         players = [HumanPlayer('x'), HumanPlayer('o')]
     else:
-        if sign == 'x':
-            players = [HumanPlayer('x'), StupidBot('o')]
-        else:
-            players = [StupidBot('x'), HumanPlayer('o')]
+        players = [HumanPlayer(sign), Bot('x' if sign == 'o' else 'o')]
 
     game = Game(players=players)
     game.play_cli()

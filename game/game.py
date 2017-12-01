@@ -82,7 +82,7 @@ class Game(object):
             self.board = Board()
         else:
             self.board = board
-        if not players or len(players) < 2 < len(players):
+        if not players or len(players) < 2 or len(players) > 2:
             raise Exception('Need exactly 2 players!')
         self.players = players
 
@@ -90,14 +90,15 @@ class Game(object):
         """
         Play the game of TicTacToe in terminal.
         """
+        player_map = {p.sign: p for p in self.players}
         while not self.board.is_over():
-            for player in self.players:
+            player = player_map[self.board.next_sign()]
+            print(str(self.board))
+            player.play_cli(self.board)
+            if self.board.is_over():
                 print(str(self.board))
-                player.play_cli(self.board)
-                if self.board.is_over():
-                    print(str(self.board))
-                    print('Game is over, {}'.format(
-                        'winner is: {}'.format(self.board.winner) if
-                        self.board.winner else 'its a draw!'
-                    ))
-                    break
+                print('Game is over, {}'.format(
+                    'winner is: {}'.format(self.board.winner) if
+                    self.board.winner else 'its a draw!'
+                ))
+                break
