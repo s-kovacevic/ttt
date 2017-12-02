@@ -154,7 +154,7 @@ class Game(DatabaseMixin):
         board = Board(state=db_object['board']['state'])
         db_players = db_object['players']
 
-        # This is so hacky that is gives me anxiety but it's having fun...
+        # This is so hacky that is gives me anxiety but it's fun...
         # Im getting the class from players module by it's name and
         # and instantiating it with the params. And of course, no time for
         # error handling.
