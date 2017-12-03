@@ -1,9 +1,11 @@
-from game.game import Game
+from game import Game
 from util import limited_input
 from game.player import HumanPlayer, StupidBot, UnbeatableBot
 
 
 if __name__ == '__main__':
+    # Maybe add the option to watch 2 unbeatable bots play tie games, somebody
+    # would probably find that amusing
     against = limited_input(
         prompt='Play versus:\n1 - friend\n2 - stupid bot\n3 - unbeatable bot\n',
         limit_to=['1', '2', '3'],

@@ -52,6 +52,7 @@ class Board(object):
         """
         return [x for x in self.state if isinstance(x, int)]
 
+    @property
     def next_sign(self):
         """
         :return: sign of the next player
@@ -107,15 +108,15 @@ class Game(DatabaseMixin):
             self.board = board
         if not players or len(players) < 2 or len(players) > 2:
             raise Exception('Need exactly 2 players!')
+        self.player_map = {p.sign: p for p in players}
         self.players = players
 
     def play_cli(self):
         """
         Play the game of TicTacToe in terminal.
         """
-        player_map = {p.sign: p for p in self.players}
         while not self.board.is_over():
-            current_player = player_map[self.board.next_sign()]
+            current_player = self.player_map[self.board.next_sign]
             print(str(self.board))
             current_player.play_cli(self.board)
             if self.board.is_over():
@@ -133,6 +134,8 @@ class Game(DatabaseMixin):
         """
         return {
             'id_': str(self.id_),
+            'winner': self.board.winner,
+            'next_sign': self.board.next_sign,
             'board': {
                 'state': self.board.state
             },

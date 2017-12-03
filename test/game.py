@@ -85,7 +85,7 @@ class TestBoard(unittest.TestCase):
 
     def test_next_sign(self):
         board = Board()
-        self.assertEqual(board.next_sign(), 'x')
+        self.assertEqual(board.next_sign, 'x')
 
         board.state[4] = 'x'
-        self.assertEqual(board.next_sign(), 'o')
+        self.assertEqual(board.next_sign, 'o')

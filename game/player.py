@@ -96,7 +96,7 @@ class UnbeatableBot(Player):
             copy_board = board.copy()
             copy_board.state[position] = sign
             position_values[position] = self.minimax(
-                copy_board.next_sign(), copy_board
+                copy_board.next_sign, copy_board
             )
 
         # Depending on which player is in charge, pick best or worst move
@@ -125,7 +125,7 @@ class UnbeatableBot(Player):
             copy_board = board.copy()
             copy_board.state[position] = self.sign
             position_scores[position] = self.minimax(
-                copy_board.next_sign(), board=copy_board
+                copy_board.next_sign, board=copy_board
             )
         best_position = max(
             position_scores.keys(),
