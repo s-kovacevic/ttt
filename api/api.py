@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from game import (
+    player,
     Game,
     InvalidMoveError
 )
@@ -18,7 +19,39 @@ def ping():
     return jsonify({'message': 'pong'})
 
 
-@api.route('/<uuid:game_id>/status', methods=['GET'])
+@api.route('/game/new', methods=['POST'])
+def new_game():
+    """
+    Endpoint that initiates a new game.
+    Request should look like:
+    {
+        "x": "HumanPlayer",
+        "o": "UnbeatableBot"
+    }
+    Possible types of players are: HumanPlayer, UnbeatableBot and StupidBot
+    :return: id of the newly created game
+    {
+        "game_id": UUID
+    }
+    """
+    data = request.get_json(force=True)
+    if 'x' not in data or 'o' not in data:
+        return jsonify({'error': 'Invalid request, missing field(s).'}), 400
+
+    # Again this hacky thing...
+    x_player = getattr(player, data['x'], None)(sign='x')
+    o_player = getattr(player, data['o'], None)(sign='o')
+
+    if x_player is None or o_player is None:
+        return jsonify({'error': 'Invalid request, wrong player type(s).'}), 400
+    game = Game(players=[x_player, o_player])
+    game.persist()
+    return jsonify({
+        'game_id': str(game.id_)
+    })
+
+
+@api.route('/game/<uuid:game_id>/status', methods=['GET'])
 def status(game_id):
     """
     Returns general information about the game.
