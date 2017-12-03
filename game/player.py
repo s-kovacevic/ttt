@@ -72,26 +72,31 @@ class UnbeatableBot(Player):
     def __init__(self, sign):
         super(UnbeatableBot, self).__init__(sign)
 
-    def minimax(self, sign, board):
+    def minimax(self, sign, board, depth=0):
         """
         Recursive minimax algorithm. Basically, this algorithm will play every
         possible game till the end and calculate best-worst case scenario while
         taking in count that players switch turns.
         :param sign: sign of the next player either x or o
-        :param board:
+        :param board: instance of the Board class
+        :param depth: used to determine better move e.g. when multiple moves
+        eventually result a victory, choose the quicker one and vice versa
         :return: int 0 if this move will eventually lead to a tie in worst case
-        scenario, 10 if this move leads to a victory, -10 if move leads to a
-        loss
+        scenario, 10 + (10 - depth) if this move leads to a victory,
+        -10 - (10 - depth) if move leads to a loss
         """
-        # TODO add weighting of returned integers so that shallower
-        # solutions get better scores
         if board.is_over():
             if not board.winner:
                 return 0
             if board.winner == self.sign:
-                return 10
+                # `10 - depth` because maximum depth can be 9 and the less deep
+                # it is, the better
+                return 10 + (10 - depth)
             else:
-                return -10
+                # This won't matter much since he is not going to be losing
+                # but if he is, he will make it as painful as possible.
+                return -10 - (10 - depth)
+        depth += 1
 
         position_values = {}
 
@@ -101,7 +106,7 @@ class UnbeatableBot(Player):
             copy_board = board.copy()
             copy_board.state[position] = sign
             position_values[position] = self.minimax(
-                copy_board.next_sign, copy_board
+                copy_board.next_sign, copy_board, depth
             )
 
         # Depending on which player is in charge, pick best or worst move

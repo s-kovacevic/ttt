@@ -13,4 +13,4 @@ class TestUnbeatableBot(unittest.TestCase):
         bot = UnbeatableBot('x')
         board = Board(state=['x', 'x', 'o', 'o', 'x', 'o', 'x', 'o', 8])
         score = bot.minimax('x', board=board)
-        self.assertEqual(score, 10)
+        self.assertEqual(score, 19)
