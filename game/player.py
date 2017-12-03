@@ -1,17 +1,19 @@
 import time
 import random
+from game.exceptions import InvalidMoveError
 
 
 class Player(object):
     def __init__(self, sign):
         self.sign = sign
 
-    def play(self, board):
+    def play(self, board, position=None):
         """
         This method should not print anything, just make the move since
         this will not be used when running from terminal
-        :param board:
-        :return:
+        :param board: instance of a Board class
+        :param position: provide position if its a manual play(e.g.
+        human player playing)
         """
         raise NotImplementedError
 
@@ -40,8 +42,11 @@ class HumanPlayer(Player):
             position = int(input()) - 1
         board.state[position] = self.sign
 
-    def play(self, board):
-        pass
+    def play(self, board, position=None):
+        if position in board.available_positions():
+            board.state[position] = self.sign
+        else:
+            raise InvalidMoveError()
 
 
 class StupidBot(Player):
@@ -57,7 +62,7 @@ class StupidBot(Player):
         print('Stupid bot finished his turn...')
         self.play(board)
 
-    def play(self, board):
+    def play(self, board, position=None):
         position = random.choice(board.available_positions())
         board.state[position] = self.sign
 
@@ -106,8 +111,11 @@ class UnbeatableBot(Player):
         else:
             return min(position_values.values())
 
-    def play(self, board):
+    def play(self, board, position=None):
         available_positions = board.available_positions()
+
+        if not available_positions:
+            raise InvalidMoveError()
 
         # Optimizing so that if bot goes first it doesn't need to go
         # through 9 minimaxes to find out the obvious result.

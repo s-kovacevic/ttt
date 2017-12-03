@@ -1,11 +1,8 @@
 from flask import Blueprint, jsonify, request
 from game import (
     Game,
-    HumanPlayer,
-    StupidBot,
-    UnbeatableBot
+    InvalidMoveError
 )
-Bots = [UnbeatableBot, StupidBot]
 
 # TODO This code needs input validation with cerberus and proper error handling
 # Nobody got time fot that
@@ -35,13 +32,13 @@ def status(game_id):
     return jsonify(game.to_database_object())
 
 
-@api.route('/<uuid:game_id>/play', methods=['POST'])
+@api.route('/game/<uuid:game_id>/play', methods=['POST'])
 def play(game_id):
     """
     Expected body is:
     {
         "sign": "x",
-        "position": 3  # 0-8
+        "position": 3  # 0-8, can be omitted if it's a Bot player's turn
     }
     :param game_id: UUID of the game
     """
@@ -53,19 +50,15 @@ def play(game_id):
     if not game:
         return jsonify({'error': "Couldn't find the game with that ID"}), 404
 
-    if game.board.next_sign == data['sign']\
-            and data['position'] in game.board.available_positions():
-        # Make sure that human is trying to play.
-        if isinstance(game.player_map[data['sign']], HumanPlayer):
-            game.board.state[data['position']] = data['sign']
-            game.persist()
+    if game.board.next_sign == data['sign'] and not game.board.is_over():
+        player = game.player_map[data['sign']]
 
-            # If opponent is a bot, write his answer also.
-            next_player = game.player_map[game.board.next_sign]
-            if not game.board.is_over() and next_player.__class__ in Bots:
-                next_player.play(game.board)
-                game.persist()
-            return '', 204
+        try:
+            player.play(board=game.board, position=data['position'])
+        except InvalidMoveError:
+            return jsonify({'error': 'Invalid move.'}), 400
+        game.persist()
+        return '', 204
 
     # Just casually pass this back if it passes everything, no time for this
     return '', 400
