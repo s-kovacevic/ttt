@@ -136,6 +136,7 @@ class Game(DatabaseMixin):
             'id_': str(self.id_),
             'winner': self.board.winner,
             'next_sign': self.board.next_sign,
+            'is_over': self.board.is_over(),
             'board': {
                 'state': self.board.state
             },
