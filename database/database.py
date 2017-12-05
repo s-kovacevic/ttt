@@ -1,13 +1,14 @@
 import logging
 from util import get_config
 from tinydb import TinyDB, Query
+from abc import ABCMeta, abstractmethod
 
 database_config = get_config(section='DATABASE')
 database = TinyDB(database_config['db_file'] or 'db.json')
 logger = logging.getLogger(__name__)
 
 
-class DatabaseMixin(object):
+class DatabaseMixin(metaclass=ABCMeta):
     """
     Mixin Class that allows easy relating between database and python objects.
     In order to use it, define class variable `__table__` and override
@@ -24,15 +25,17 @@ class DatabaseMixin(object):
                 'DatabaseMixin'
             ) from e
 
+    @abstractmethod
     def to_database_object(self):
         """
         Convert your object to dict representation, that will be saved to
         database.
         :return: dictionary of what you want to be persisted in database
         """
-        raise NotImplementedError
+        pass
 
     @staticmethod
+    @abstractmethod
     def from_database_object(db_object):
         """
         Implementation should create python class instance from the dictionary
@@ -40,7 +43,7 @@ class DatabaseMixin(object):
         :param db_object: dictionary fetched from the database
         :return: python object instance
         """
-        raise NotImplementedError
+        pass
 
     def persist(self):
         """

@@ -1,12 +1,15 @@
 import time
 import random
+from abc import ABCMeta, abstractmethod
 from game.exceptions import InvalidMoveError
 
 
-class Player(object):
+class Player(metaclass=ABCMeta):
     def __init__(self, sign):
+        super().__init__()
         self.sign = sign
 
+    @abstractmethod
     def play(self, board, position=None):
         """
         This method should not print anything, just make the move since
@@ -15,8 +18,9 @@ class Player(object):
         :param position: provide position if its a manual play(e.g.
         human player playing)
         """
-        raise NotImplementedError
+        pass
 
+    @abstractmethod
     def play_cli(self, board):
         """
         This method will be called when Player should play the game ran from
@@ -24,7 +28,7 @@ class Player(object):
         :param board: board state list representation
         :return: None
         """
-        raise NotImplementedError
+        pass
 
 
 class HumanPlayer(Player):
