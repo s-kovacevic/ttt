@@ -33,18 +33,9 @@ class Board(object):
         """
         :return: Boolean that shows whether or not game is over
         """
-        if not self.available_positions():
+        if not self.available_positions() or self.winner is not None:
             return True
-        return (
-            len({self.state[0], self.state[3], self.state[6]}) == 1 or
-            len({self.state[1], self.state[4], self.state[7]}) == 1 or
-            len({self.state[2], self.state[5], self.state[8]}) == 1 or
-            len({self.state[0], self.state[1], self.state[2]}) == 1 or
-            len({self.state[3], self.state[4], self.state[5]}) == 1 or
-            len({self.state[6], self.state[7], self.state[8]}) == 1 or
-            len({self.state[0], self.state[4], self.state[8]}) == 1 or
-            len({self.state[2], self.state[4], self.state[6]}) == 1
-        )
+        return False
 
     def available_positions(self):
         """
