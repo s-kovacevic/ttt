@@ -33,9 +33,7 @@ class Board(object):
         """
         :return: Boolean that shows whether or not game is over
         """
-        if not self.available_positions() or self.winner is not None:
-            return True
-        return False
+        return not self.available_positions() or self.winner is not None
 
     def available_positions(self):
         """
