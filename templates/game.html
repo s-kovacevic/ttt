@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Game{% endblock %}
+
+{% block body %}
+  <div id="game">
+    <table cellpadding="10px">
+      <tr>
+        <td>
+          <svg id="0-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="0-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+        <td>
+          <svg id="1-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="1-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+        <td>
+          <svg id="2-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="2-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <svg id="3-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="3-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+        <td>
+          <svg id="4-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="4-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+        <td>
+          <svg id="5-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="5-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <svg id="6-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="6-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+        <td>
+          <svg id="7-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="7-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+        <td>
+          <svg id="8-x" aria-label="X" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M16,16L112,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+            <path d="M112,16L16,112" style="stroke: rgb(112,76,94);stroke-width: 10"></path>
+          </svg>
+          <svg id="8-o" aria-label="O" role="img" viewBox="0 0 128 128" style="display: none;">
+            <path d="M64,16A48,48 0 1,0 64,112A48,48 0 1,0 64,16" style="stroke: rgb(112,76,94);fill: none;stroke-width: 10"></path>
+          </svg>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <link href="{{ url_for('static', filename='css/game.css') }}" rel="stylesheet">
+{% endblock %}
